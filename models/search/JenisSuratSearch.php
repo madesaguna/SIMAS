@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace app\models\search;
 
 use Yii;
 use yii\base\Model;
@@ -18,7 +18,7 @@ class JenisSuratSearch extends JenisSurat
     public function rules()
     {
         return [
-            [['id_jenis_surat'], 'integer'],
+            [['id'], 'integer'],
             [['kode_jenis', 'nama_jenis', 'content_jenis'], 'safe'],
         ];
     }
@@ -59,7 +59,7 @@ class JenisSuratSearch extends JenisSurat
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id_jenis_surat' => $this->id_jenis_surat,
+            'id' => $this->id,
         ]);
 
         $query->andFilterWhere(['like', 'kode_jenis', $this->kode_jenis])

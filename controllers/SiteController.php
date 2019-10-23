@@ -8,8 +8,8 @@ use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
-use app\models\SuratMasukSearch;
-use app\models\SuratKeluarSearch;
+use app\models\search\SuratMasukSearch;
+use app\models\search\SuratKeluarSearch;
 
 class SiteController extends Controller
 {

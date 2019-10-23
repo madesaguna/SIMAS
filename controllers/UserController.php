@@ -3,12 +3,11 @@
 namespace app\controllers;
 
 use Yii;
+use app\models\search\UserSearch;
 use app\models\User;
-use app\models\UserSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\web\UploadedFile;
 
 /**
  * UserController implements the CRUD actions for User model.
@@ -66,46 +65,18 @@ class UserController extends Controller
     public function actionCreate()
     {
         $model = new User();
-        $checkpass = $model->password;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-
-            $pass = md5($model->password);
-            $model->password = $pass;
-            $model->user_image= UploadedFile::getInstance($model,'user_image');
-
-            if ($model->user_image!=null) {    
-                $foto = $model->id.'-'.$model->username;
-                $model->user_image->saveAs('repositori/images/'.$foto.'.'.$model->user_image->extension); 
-                //save the path in the db column
-                $model->user_image = 'repositori/images/'.$foto.'.'.$model->user_image->extension;
-                $model->save();
-            }
-            $model->save();
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else{
-            return $this->render('create', [
-            'model' => $model,
-            ]);
-        }
-
-        /*if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            if ($model->password == $checkpass) {
-                
-            }
-            else {
-                $pass = md5($model->password);
-                $model->password = $pass;
-            }
-            if ($model->save()){
-                //$this->redirect(array('index'));
-                return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $model->setPassword($model->password);
+            $model->generateAuthKey();
+            if ($model->save()) {
+                return $this->redirect('index');
             }
         }
-
+        $model->password = null;
         return $this->render('create', [
             'model' => $model,
-        ]);*/
+        ]);
     }
 
     /**
@@ -118,46 +89,14 @@ class UserController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $checkpass = $model->password;
+        $model->scenario = 'update_form_data';
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-
-            $pass = md5($model->password);
-            $model->password = $pass;
-            $model->user_image= UploadedFile::getInstance($model,'user_image');
-
-            if ($model->user_image!=null) {    
-                $foto = $model->id.'-'.$model->username;
-                $model->user_image->saveAs('repositori/images/'.$foto.'.'.$model->user_image->extension); 
-                //save the path in the db column
-                $model->user_image = 'repositori/images/'.$foto.'.'.$model->user_image->extension;
-                $model->save();
-            }
-            $model->save();
             return $this->redirect(['view', 'id' => $model->id]);
-        } else{
-            return $this->render('create', [
-            'model' => $model,
-            ]);
         }
-
-        /*if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            if ($model->password == $checkpass) {
-                
-            }
-            else {
-                $pass = md5($model->password);
-                $model->password = $pass;
-            }
-            if ($model->save()){
-                //$this->redirect(array('index'));
-                return $this->redirect(['view', 'id' => $model->id]);
-            }
-        }
-
         return $this->render('update', [
             'model' => $model,
-        ]);*/
+        ]);
     }
 
     /**
@@ -170,15 +109,7 @@ class UserController extends Controller
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
-        if (!empty($model->user_image)) {
-            unlink($model->user_image);
-            $this->findModel($id)->delete();
-        }
-        else{
-            $this->findModel($id)->delete();
-        }
-        
-
+        $model->delete();
         return $this->redirect(['index']);
     }
 

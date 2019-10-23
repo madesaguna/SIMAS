@@ -6,8 +6,9 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\JenisSurat */
 
-$this->title = 'Create Jenis Surat';
-$this->params['breadcrumbs'][] = ['label' => 'Jenis Surats', 'url' => ['index']];
+$this->title = 'Tambah Jenis Surat';
+$this->params['title'] = $this->title;
+$this->params['breadcrumbs'][] = ['label' => 'Jenis Surat', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 

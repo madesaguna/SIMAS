@@ -4,7 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\JenisSurat;
-use app\models\JenisSuratSearch;
+use app\models\search\JenisSuratSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -66,7 +66,7 @@ class JenisSuratController extends Controller
         $model = new JenisSurat();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id_jenis_surat]);
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -85,7 +85,7 @@ class JenisSuratController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id_jenis_surat]);
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
                 'model' => $model,

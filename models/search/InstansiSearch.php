@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace app\models\search;
 
 use Yii;
 use yii\base\Model;
@@ -18,10 +18,10 @@ class InstansiSearch extends Instansi
     public function rules()
     {
         return [
-            [['id_instansi'], 'integer'],
+            [['id'], 'integer'],
             [['nama_instansi', 'alamat', 'website', 'nama_yayasan', 'kepala_instansi', 'idkepala', 'email_instansi', 'logo', 'kopsurat'], 'safe'],
         ];
-    }  
+    }
 
     /**
      * @inheritdoc
@@ -58,9 +58,6 @@ class InstansiSearch extends Instansi
         }
 
         // grid filtering conditions
-        $query->andFilterWhere([
-            'id_instansi' => $this->id_instansi,
-        ]);
 
         $query->andFilterWhere(['like', 'nama_instansi', $this->nama_instansi])
             ->andFilterWhere(['like', 'alamat', $this->alamat])
@@ -68,9 +65,7 @@ class InstansiSearch extends Instansi
             ->andFilterWhere(['like', 'nama_yayasan', $this->nama_yayasan])
             ->andFilterWhere(['like', 'kepala_instansi', $this->kepala_instansi])
             ->andFilterWhere(['like', 'idkepala', $this->idkepala])
-            ->andFilterWhere(['like', 'email_instansi', $this->email_instansi])
-            ->andFilterWhere(['like', 'logo', $this->logo])
-            ->andFilterWhere(['like', 'kopsurat', $this->kopsurat]);
+            ->andFilterWhere(['like', 'email_instansi', $this->email_instansi]);
 
         return $dataProvider;
     }

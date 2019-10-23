@@ -25,7 +25,6 @@ class AppAsset extends AssetBundle
         'js/plugins/gritter/jquery.gritter.css',
         'css/site.css',
         'css/animate.css',
-        'css/bootstrap.min.css',
         'css/style.min.css',
         'css/plugins/datapicker/datepicker3.css',
 
@@ -36,8 +35,6 @@ class AppAsset extends AssetBundle
     ];
     public $js = [
         // Mainly scripts -->
-        'js/jquery-2.1.1.js',
-        'js/bootstrap.min.js',
         'js/plugins/metisMenu/jquery.metisMenu.js',
         'js/plugins/slimscroll/jquery.slimscroll.min.js',
         'js/plugins/jeditable/jquery.jeditable.js',
@@ -90,6 +87,6 @@ class AppAsset extends AssetBundle
     ];
     public $depends = [
         'yii\web\YiiAsset',
-        'yii\bootstrap\BootstrapAsset',
+        'yii\bootstrap\BootstrapPluginAsset',
     ];
 }

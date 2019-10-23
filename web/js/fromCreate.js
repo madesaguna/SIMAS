@@ -12,6 +12,7 @@ function romanize (num) {
     return Array(+digits.join("") + 1).join("M") + roman;
 }
 
+/*
 $('#suratkeluar-id_jenis_surat').change(function(){
     var kode = $(this).find(':selected').data('kode');
     var count = $(this).find(':selected').data('count');
@@ -22,3 +23,4 @@ $('#suratkeluar-id_jenis_surat').change(function(){
     $('#suratkeluar-no_suratkeluar').val(count + kode + "/" + strRomanMonth +"/" + strRomanYear);
     tinyMCE.activeEditor.setContent(content);
 });
+*/

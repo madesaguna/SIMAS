@@ -7,7 +7,7 @@ use Yii;
 /**
  * This is the model class for table "jenis_surat".
  *
- * @property integer $id_jenis_surat
+ * @property integer $id
  * @property string $kode_jenis
  * @property string $nama_jenis
  * @property string $content_jenis
@@ -29,8 +29,8 @@ class JenisSurat extends \yii\db\ActiveRecord
     {
         return [
             [['content_jenis'], 'string'],
-            [['kode_jenis', 'nama_jenis'], 'string', 'max' => 30],
-            [['kode_jenis', 'nama_jenis', 'content_jenis'], 'required'],
+            [['nama_jenis'], 'string', 'max' => 30],
+            [['nama_jenis', 'content_jenis'], 'required'],
         ];
     }
 
@@ -45,5 +45,10 @@ class JenisSurat extends \yii\db\ActiveRecord
             'nama_jenis' => 'Nama Jenis',
             'content_jenis' => 'Content Jenis',
         ];
+    }
+
+    public static function getAllJenisSurat()
+    {
+        return static::find()->all();
     }
 }

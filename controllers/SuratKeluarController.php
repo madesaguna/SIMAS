@@ -4,11 +4,10 @@ namespace app\controllers;
 
 use Yii;
 use app\models\SuratKeluar;
-use app\models\SuratKeluarSearch;
+use app\models\search\SuratKeluarSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use kartik\mpdf\Pdf;
 
 /**
  * SuratKeluarController implements the CRUD actions for SuratKeluar model.
@@ -27,12 +26,6 @@ class SuratKeluarController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
-            /*[
-                'class' => 'mdm\autonumber\Behavior',
-                'attribute' => 'no_suratkeluar', // required
-                'value' => date('Ymd') . '-?' , 
-                'digit' => 4 
-            ],*/
         ];
     }
 
@@ -74,7 +67,7 @@ class SuratKeluarController extends Controller
         $model = new SuratKeluar();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id_suratkeluar]);
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('create', [
@@ -94,7 +87,7 @@ class SuratKeluarController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id_suratkeluar]);
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
@@ -111,6 +104,8 @@ class SuratKeluarController extends Controller
      */
     public function actionDelete($id)
     {
+        $model = $this->findModel($id);
+        unlink($model->upload_berkas);
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
@@ -132,5 +127,5 @@ class SuratKeluarController extends Controller
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
-    
+
 }

@@ -13,22 +13,11 @@ use dosamigos\tinymce\TinyMce;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'kode_jenis')->textInput(['maxlength' => true]) ?>
+    <?php // $form->field($model, 'kode_jenis')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'nama_jenis')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'content_jenis')->widget(TinyMce::className(), [
-	    'options' => ['rows' => 12],
-	    'language' => 'es',
-	    'clientOptions' => [
-	        'plugins' => [
-	            "advlist autolink lists link charmap print preview anchor",
-	            "searchreplace visualblocks code fullscreen",
-	            "insertdatetime media table contextmenu paste"
-	        ],
-	        'toolbar' => "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
-	    ]
-	]);?>
+    <?= $form->field($model, 'content_jenis')->textarea() ?>
 
 
     <div class="form-group">

@@ -1,16 +1,16 @@
 <?php
 
-namespace app\models;
+namespace app\models\search;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\SuratMasuk;
+use app\models\SuratKeluar;
 
 /**
- * SuratMasukSearch represents the model behind the search form of `app\models\SuratMasuk`.
+ * SuratKeluarSearch represents the model behind the search form of `app\models\SuratKeluar`.
  */
-class SuratMasukSearch extends SuratMasuk
+class SuratKeluarSearch extends SuratKeluar
 {
     /**
      * @inheritdoc
@@ -18,8 +18,8 @@ class SuratMasukSearch extends SuratMasuk
     public function rules()
     {
         return [
-            [['id_suratmasuk', 'id_jenis_surat'], 'integer'],
-            [['no_suratmasuk', 'no_urut', 'pengirim', 'tgl_masuk', 'perihal_surat', 'upload_berkas'], 'safe'],
+            [['id', 'id_jenis_surat'], 'integer'],
+            [['no_suratkeluar', 'tanggal_surat', 'tujuan', 'narasi'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class SuratMasukSearch extends SuratMasuk
      */
     public function search($params)
     {
-        $query = SuratMasuk::find();
+        $query = SuratKeluar::find();
 
         // add conditions that should always apply here
 
@@ -59,27 +59,21 @@ class SuratMasukSearch extends SuratMasuk
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id_suratmasuk' => $this->id_suratmasuk,
-            'tgl_masuk' => $this->tgl_masuk,
+            'tanggal_surat' => $this->tanggal_surat,
             'id_jenis_surat' => $this->id_jenis_surat,
         ]);
 
-        $query->andFilterWhere(['like', 'no_suratmasuk', $this->no_suratmasuk])
-            ->andFilterWhere(['like', 'no_urut', $this->no_urut])
-            ->andFilterWhere(['like', 'pengirim', $this->pengirim])
-            ->andFilterWhere(['like', 'perihal_surat', $this->perihal_surat])
-            ->andFilterWhere(['like', 'upload_berkas', $this->upload_berkas]);
+        $query->andFilterWhere(['like', 'no_suratkeluar', $this->no_suratkeluar])
+            ->andFilterWhere(['like', 'tujuan', $this->tujuan])
+            ->andFilterWhere(['like', 'narasi', $this->narasi]);
 
         return $dataProvider;
     }
 
-
-    public function count_some()
+    public static function count_some()
     {
-        $count_query = SuratMasuk::find()->count();
-
-        $jumlah_surat_masuk = $count_query;
-
-        return $jumlah_surat_masuk;
+        $count_query = static::find()->count();
+        $jumlah_surat_keluar = $count_query;
+        return $jumlah_surat_keluar;
     }
 }

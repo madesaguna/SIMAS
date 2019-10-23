@@ -26,11 +26,12 @@
         "kartik-v/yii2-grid": "@dev",
         "kartik-v/yii2-editable": "*",
         "mdmsoft/yii2-autonumber": "~1.0",
-        "phpoffice/phpexcel": "*",
         "kartik-v/yii2-date-range": "*",
         "kartik-v/yii2-widget-activeform": "@dev",
         "moonlandsoft/yii2-phpexcel": "*",
-        "codemix/yii2-excelexport": "^2.7"
+        "codemix/yii2-excelexport": "^2.7",
+        "yiisoft/yii2-imagine": "^2.2",
+        "phpoffice/phpspreadsheet": "^1.9"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
