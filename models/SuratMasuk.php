@@ -44,9 +44,9 @@ class SuratMasuk extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['no_suratmasuk', 'pengirim', 'tanggal_masuk', 'tanggal_surat', 'perihal_surat', 'narasi'], 'required'],
+            [['no_suratmasuk', 'pengirim', 'tanggal_masuk', 'tanggal_surat', 'perihal_surat', 'narasi', 'id_jenis_surat'], 'required'],
             [['tanggal_masuk', 'tanggal_surat'], 'safe'],
-            [['jenis_surat'], 'string', 'max' => 25],
+            [['id_jenis_surat'], 'integer'],
             [['no_suratmasuk', 'no_urut'], 'string', 'max' => 45],
             [['pengirim', 'perihal_surat'], 'string', 'max' => 100],
             [['upload_berkas', 'no_urut'], 'string', 'max' => 255],
@@ -54,10 +54,18 @@ class SuratMasuk extends \yii\db\ActiveRecord
                 ['uploaded_file'],
                 'file',
                 'extensions' => ['pdf'],
-                'maxSize' => 4 * 1024 * 1024,
+                'maxSize' => 12 * 1024 * 1024,
                 'skipOnEmpty' => true,
             ],
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getJenisSurat()
+    {
+        return $this->hasOne(JenisSurat::className(), ['id' => 'id_jenis_surat']);
     }
 
     /**
@@ -75,7 +83,7 @@ class SuratMasuk extends \yii\db\ActiveRecord
             'perihal_surat' => 'Perihal Surat',
             'narasi' => 'Narasi',
             'upload_berkas' => 'Upload Berkas',
-            'jenis_surat' => 'Jenis Surat',
+            'id_jenis_surat' => 'Jenis Surat',
         ];
     }
 
@@ -107,10 +115,15 @@ class SuratMasuk extends \yii\db\ActiveRecord
 
     protected function generateFileName()
     {
-        $name = preg_replace('/[^0-9a-zA-Z\-]/','_',date('Y-m-d', strtotime($this->tanggal_surat)) . '-' . $this->pengirim . '-' . $this->perihal_surat);
+        $name = preg_replace('/[^0-9a-zA-Z]/','_', $this->no_suratmasuk)
+                . '-' . $this->generateRandomString();
         $arsip = strip_tags(preg_replace('/\s+/', '_', $name));
-        $fileString = $arsip . '.' . $this->uploaded_file->extension;
-        return $fileString;
+        return $arsip . '.' . $this->uploaded_file->extension;
+    }
+
+    protected function generateRandomString()
+    {
+        return substr(str_replace(['+', '/', '='], '', base64_encode(random_bytes(20))), 0, 20);
     }
 
     public function getSuratMasukUrl()

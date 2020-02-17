@@ -1,12 +1,17 @@
 <?php
 
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use app\models\JenisSurat;
 use dosamigos\datepicker\DatePicker;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\SuratMasuk */
 /* @var $form yii\widgets\ActiveForm */
+
+$jenis_surat = JenisSurat::getAllJenisSurat();
+$items = ArrayHelper::map($jenis_surat, 'id', 'nama_jenis');
 ?>
 
 <div class="surat-masuk-form">
@@ -54,7 +59,11 @@ use dosamigos\datepicker\DatePicker;
 
     <?= $form->field($model, 'uploaded_file')->fileInput() ?>
 
-    <?= $form->field($model, 'jenis_surat')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'id_jenis_surat')->dropDownList($items, [
+            'prompt' => 'Pilih Jenis',
+        ]
+    )
+    ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? '<i class="fa fa-save"> </i> Save' : '<i class="fa fa-pencil"> </i> Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

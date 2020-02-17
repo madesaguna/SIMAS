@@ -19,7 +19,7 @@ class SuratMasukSearch extends SuratMasuk
     {
         return [
             [['id'], 'integer'],
-            [['no_suratmasuk', 'no_urut', 'pengirim', 'tanggal_masuk', 'tanggal_surat', 'perihal_surat', 'upload_berkas', 'jenis_surat'], 'safe'],
+            [['no_suratmasuk', 'no_urut', 'pengirim', 'tanggal_masuk', 'tanggal_surat', 'perihal_surat', 'upload_berkas', 'id_jenis_surat'], 'safe'],
         ];
     }
 
@@ -63,7 +63,7 @@ class SuratMasukSearch extends SuratMasuk
             'tanggal_surat' => $this->tanggal_surat,
         ]);
 
-        $query->andFilterWhere(['like', 'jenis_surat', $this->jenis_surat])
+        $query->andFilterWhere(['like', 'id_jenis_surat', $this->id_jenis_surat])
 			->andFilterWhere(['like', 'no_suratmasuk', $this->no_suratmasuk])
             ->andFilterWhere(['like', 'no_urut', $this->no_urut])
             ->andFilterWhere(['like', 'pengirim', $this->pengirim])
